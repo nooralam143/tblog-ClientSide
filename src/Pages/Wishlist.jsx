@@ -69,7 +69,7 @@ const Wishlist = () => {
             <span className="loading loading-spinner text-center loading-xs"></span>
         </div>
           ) : blogPost.length === 0 ? (
-            <p className="text-center font-extrabold text-3xl flex justify-center items-center h-full">Your cart is empty.</p>
+            <p className="text-center font-extrabold text-3xl flex justify-center items-center h-full">Your Wishlist is empty.</p>
           ) : (
             <div className="flex flex-col gap-4">
   {blogPost.map((post) => (
@@ -90,7 +90,7 @@ const Wishlist = () => {
        <Link to={`/post/${post?._id}`}><button className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-2">Details</button></Link>
        </div>
         <div>
-        <button className="w-full bg-red-500 text-white px-4 py-2 rounded-md mt-2" onClick={() => handleDelete(post?._id)}>Delete</button>
+        <button className="w-full bg-red-500 text-white px-4 py-2 rounded-md mt-2" onClick={() => handleDelete(post?._id)}>Remove</button>
         </div>
         </div>
       </div>

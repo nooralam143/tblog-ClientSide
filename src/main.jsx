@@ -23,6 +23,7 @@ import AllBlog from './Pages/AllBlog';
 import FeaturedBlogs from './Pages/FeaturedBlogs';
 import Wishlist from './Pages/Wishlist';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
+import BlogDetails from './Pages/BlogDetails';
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: '/all-blog',
         element:<AllBlog></AllBlog>,
+      },
+      {
+        path: '/post/:id',
+        element:<PrivateRoute><BlogDetails></BlogDetails></PrivateRoute>,
       }
       ,
       {
