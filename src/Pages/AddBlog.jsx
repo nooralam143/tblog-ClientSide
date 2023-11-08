@@ -1,41 +1,103 @@
 import { useState, useContext } from "react";
-// import { Link } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
 import { Button, Card, Label, TextInput } from 'flowbite-react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { AuthContext } from "../providers/AuthProvider";
+import axios from 'axios';
+import { serverURL } from "../config";
 
 const AddBlog = () => {
     const [longDescription, setLongDescription] = useState('');
-    const [shortDescription, setshortDescription] = useState('');
+    const [shortDescription, setShortDescription] = useState('');
     const { user } = useContext(AuthContext);
     const author = user.displayName;
     const authorEmail = user.email;
+    const [tags, setTags] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState("");
 
     const handleLongDescriptionChange = (value) => {
         setLongDescription(value);
     };
 
     const handleShortDescriptionChange = (value) => {
-        setshortDescription(value);
+        setShortDescription(value);
     };
 
-    const handalAddBlog = (e) => {
+    const handleTagChange = (e) => {
+        setTags(e.target.value);
+    };
+
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
+    };
+    const postCategories = [
+        "Technology",
+        "Science",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Programming",
+        "Web Development",
+        "Mobile Development",
+        "Data Science",
+        "Cybersecurity",
+        "Blockchain",
+        "Cloud Computing",
+        "Internet of Things (IoT)",
+        "Virtual Reality",
+        "Augmented Reality",
+        "Gaming",
+        "Health-Tech",
+        "Fintech",
+        "E-commerce",
+        "Social Media",
+        "Digital Marketing",
+        "Robotics",
+        "Space Exploration",
+        "Gadgets",
+        "Software Engineering",
+        "Computer Hardware",
+        "Cryptocurrency",
+        "AI Ethics",
+        "Biotechnology",
+        "Environmental Tech",
+        "Tech Industry News",
+        "Startup Stories"
+      ];
+      const handalAddBlog = async (e) => {
         e.preventDefault();
         const form = e.target;
-        const postTitle = form.postTitle;
+        const postTitle = form.postTitle.value;
         const postImage = form.postImage.value;
-        const postCategory = form.postCategory.value;
+        const postCategory = selectedCategory;
+        const PostTag = tags.split(',').map(tag => tag.trim());
         const SortDescription = shortDescription;
         const LongDescription = longDescription;
-        const currentDate = new Date(); // Get current date and time
+        const currentDate = new Date();
         const options = { timeZone: 'Asia/Dhaka', timeZoneName: 'short' };
-        const publishDate = currentDate.toLocaleString('en-US', options); // Convert to Dhaka timezone
-        const blogPost = { author, authorEmail, postTitle, postImage, postCategory, SortDescription, LongDescription, publishDate };
-        console.log('blogPost Data:', blogPost);
-    }
+        const publishDate = currentDate.toLocaleString('en-US', options);
+
+        const blogPost = { author, authorEmail, postTitle, postImage, postCategory, PostTag, SortDescription, LongDescription, publishDate };
+
+        try {
+            const response = await axios.post(`${serverURL}/post`, blogPost, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (response.status === 200) {
+                toast.success('Blog post added successfully');
+                form.reset(); // Reset the form
+            } else {
+                toast.error('Error adding blog post');
+            }
+        } catch (error) {
+            toast.error('Error adding blog post');
+            console.error('There was a problem adding the blog post:', error);
+        }
+    };
 
     return (
         <Card className="max-w-4xl mx-auto mt-10 mb-10">
@@ -53,21 +115,27 @@ const AddBlog = () => {
                     <TextInput id="postImage" name="postImage" type="text" placeholder="Image URL" required />
                 </div>
                 <div>
+            <div className="mb-2 block">
+                <Label className="text-lg" htmlFor="postCategory" value="Category" />
+                <select
+                    id="postCategory"
+                    name="postCategory"
+                    className="mt-1 p-2 border border-gray-300 rounded w-full focus:ring-indigo-500 focus:border-indigo-500"
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                >
+                    <option value="" disabled>Select a category</option>
+                    {postCategories.map(category => (
+                        <option key={category} value={category}>{category}</option>
+                    ))}
+                </select>
+            </div>
+        </div>
+        <div>
                     <div className="mb-2 block">
-                        <Label className="text-lg" htmlFor="postCategory" value="category" />
-                        <select
-                            id="postCategory"
-                            name="postCategory"
-                            className="mt-1 p-2 border border-gray-300 rounded w-full focus:ring-indigo-500 focus:border-indigo-500"
-                        >
-                            <option value="Apple">Apple</option>
-                            <option value="Samsung">Samsung</option>
-                            <option value="Sony">Sony</option>
-                            <option value="Google">Google</option>
-                            <option value="Intel">Intel</option>
-                            <option value="OPPO">OPPO</option>
-                        </select>
+                        <Label className="text-lg" htmlFor="tags" value="Tags (separate by commas)" />
                     </div>
+                    <TextInput id="tags" name="tags" type="text" value={tags} onChange={handleTagChange} placeholder="Ex. Tag1, Tag2" />
                 </div>
                 <div>
                     <div className="mb-2 block">
@@ -87,7 +155,7 @@ const AddBlog = () => {
                     </div>
                     <div>
                         <div className='bg-gray-100'>
-                            <ReactQuill value={longDescription} onChange={handleLongDescriptionChange} style={{ height: "200px", width: "100%" }} />
+                            <ReactQuill value={longDescription} onChange={handleLongDescriptionChange} style={{height: '400px', width: '100%' }} />
                         </div>
                     </div>
                 </div>
@@ -95,7 +163,22 @@ const AddBlog = () => {
 
                 <Button type="submit">Public Post</Button>
             </form>
+            <div>
+                  <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+        </div>
         </Card>
+
     );
 };
 
