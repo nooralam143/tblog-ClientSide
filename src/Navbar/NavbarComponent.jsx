@@ -48,7 +48,7 @@ const NavbarComponent = () => {
             :
 
             <Link to="/login">
-              <button className="btn btn-sm h-10 pr-1">Login</button>
+              <button className="btn btn-sm h-10 pr-1">Login/Register</button>
             </Link>
 
         }

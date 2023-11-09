@@ -70,12 +70,17 @@ console.log(data);
               <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {post.postTitle}
               </h5>
+             <div>
+             <h5 className="text-base text-blue-500 font-bold tracking-tight dark:text-white">
+                {post.postCategory}
+              </h5>
+             </div>
               <div className="font-normal text-gray-700 dark:text-gray-400">
                 <div dangerouslySetInnerHTML={{ __html: post.SortDescription }}></div>
               </div>
               <div  className='text-center'>
                 <div>
-                <button className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-2" onClick={() => handleclick(post)}>
+                <button className="w-full bg-pink-500 text-white px-4 py-2 rounded-md mt-2" onClick={() => handleclick(post)}>
                 Wishlist</button>
                 </div>
                 <div>

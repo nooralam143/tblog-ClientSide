@@ -18,7 +18,7 @@ const AllBlog = () => {
     queryKey: ['posts'],
     queryFn: fetchData,
     config: {
-      refetchInterval: 1000,
+      refetchInterval: 5000,
       cacheTime: 60000,
     },
   });
