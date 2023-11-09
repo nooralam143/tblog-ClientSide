@@ -72,7 +72,8 @@ const BlogDetails = () => {
   <span className="font-bold text-lg md:text-xl lg:text-2xl">Description: </span><hr></hr><br></br>
   <div className="text-gray-700" dangerouslySetInnerHTML={{ __html: blogPost.LongDescription }}></div>
   </div>
-  <CommentComponent id={blogPost._id}></CommentComponent>
+  <CommentComponent AuthorEmail={blogPost.authorEmail} postID={blogPost._id}></CommentComponent>
+
 </div>
       ) : (
         <p>Post not found</p>

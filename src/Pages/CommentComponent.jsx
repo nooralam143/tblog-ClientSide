@@ -6,7 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { serverURL } from "../config";
 import axios from "axios";
 
-const CommentComponent = ({ postID }) => {
+const CommentComponent = ({postID, AuthorEmail}) => {
+  console.log("post id is",postID, AuthorEmail);
   const { user } = useContext(AuthContext);
   const commentOwner = user.displayName;
   const commentOwnerPhoto = user.photoURL;
@@ -34,6 +35,11 @@ const CommentComponent = ({ postID }) => {
 
   const handalAddComment = async (e) => {
     e.preventDefault();
+    if (AuthorEmail === user.email) {
+      // Show an error message when the AuthorEmail is the same as the user's email
+      toast.error('Can not Comment on Own blog');
+      return;
+    }
     const form = e.target;
     const comment = form.comment.value;
     const userComment = { postID, commentOwner, commentOwnerPhoto, comment };

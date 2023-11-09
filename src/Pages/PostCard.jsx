@@ -97,10 +97,17 @@ const {data, titleCard} = props;
   return (
     <div className='max-w-4xl mx-auto'>
       <h1 className="text-2xl font-bold">{titleCard}</h1>
-      <ul>
+      <ul className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4">
         {data.map(post => (
           <li key={post._id}>
-            <Card className="max-w-3xl mx-auto my-2" imgAlt={post.postTitle} imgSrc={post.postImage}>
+            <Card className="max-w-3xl mx-auto my-2">
+            <div>
+              <img
+                src={post?.postImage}
+                alt={post?.postTitle}
+                className="w-full h-64 md:h-450 lg:h-600 object-cover"
+              />
+            </div>
               <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {post.postTitle}
               </h5>
