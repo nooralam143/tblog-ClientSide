@@ -5,15 +5,15 @@ import Skeleton from 'react-loading-skeleton';
 import { Button, Spinner } from 'flowbite-react';
 import { serverURL } from '../config';
 
-const fetchData = async () => {
-  const response = await axios.get(`${serverURL}/post`); // Replace with your API endpoint
-
-  return response.data;
-};
-
-
 
 const AllBlog = () => {
+  
+  const fetchData = async () => {
+    const response = await axios.get(`${serverURL}/post`); // Replace with your API endpoint
+  
+    return response.data;
+  };
+    
   const { isLoading, isError, data } = useQuery({
     queryKey: ['posts'],
     queryFn: fetchData,

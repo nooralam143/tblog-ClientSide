@@ -14,7 +14,7 @@ const Wishlist = () => {
 
   useEffect(() => {
     // Make an HTTP request to fetch blog data from the API
-    fetch(`${serverURL}/wishlist?userEmail=${user.email}`)
+    fetch(`${serverURL}/wishlist/user?userEmail=${user.email}`)
       .then((response) => response.json())
       .then((data) => {
         setblogPost(data); // Set the fetched blog data in the state
