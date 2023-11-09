@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { serverURL } from '../config';
 import { AuthContext } from '../providers/AuthProvider';
 import CommentComponent from './CommentComponent';
@@ -13,43 +13,8 @@ const BlogDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const userEmail = user.email;
-//   const productID = id;
 
-  const handleclick = () => {
-    const {author, authorEmail, postTitle, postImage, SortDescription, LongDescription, postCategory, PostTag, publishDate} = blogPost;
-
-    const myWishlist = {userEmail, author, authorEmail, postTitle, postImage, SortDescription, LongDescription, postCategory, PostTag, publishDate };
-    console.log(myWishlist);
-    fetch(`${serverURL}/wishlist`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(myWishlist)
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then(data => {
-        console.log(data);
-        if (data.insertedId) {
-          toast.success('Product added in your cart', {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-      })
-      .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-      });
-  }
+ 
 
   useEffect(() => {
     // Fetch product data based on the id from the URL
@@ -75,6 +40,16 @@ const BlogDetails = () => {
 <div className='px-5 py-5'>
 <h2 className="text-lg md:text-xl lg:text-2xl font-semibold mb-2">{blogPost.postTitle}</h2>
         <p className="text-gray-700"><span className="font-bold">Category: </span>{blogPost.postCategory}</p>
+       { blogPost.authorEmail == userEmail &&(
+    <div>
+<Link to={{
+  pathname: `/update/${blogPost?._id}`,
+  state: { blogPost: blogPost }
+}}>
+  <button className="w-28 bg-blue-500 text-white px-4 py-2 rounded-md mt-2">Update</button>
+</Link>
+    </div>
+  )}
 </div>
    <div className="flex justify-center items-center">
    <img

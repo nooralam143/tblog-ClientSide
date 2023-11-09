@@ -5,17 +5,22 @@ import 'react-toastify/dist/ReactToastify.css';
 // import { useParams } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types
 const PostCard = ({ data }) => {
   const { user } = useContext(AuthContext);
-const {email:userEmail} = user
+  const navigate = useNavigate();
 
   if (data.length === 0) {
     return <div>No posts available</div>;
   }
   const handleclick = (post) => {
+    if(!user){
+      navigate("/login", { state: { from: window.location.pathname } });
+      return;
+    }
+    const {email:userEmail} = user
     // eslint-disable-next-line react/prop-types, no-undef
     const {author, authorEmail, postTitle, postImage, SortDescription, LongDescription, postCategory, PostTag, publishDate} = post;
     const myWishlist = {userEmail, author, authorEmail, postTitle, postImage, SortDescription, LongDescription, postCategory, PostTag, publishDate };
@@ -65,9 +70,9 @@ console.log(data);
               <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {post.postTitle}
               </h5>
-              <p className="font-normal text-gray-700 dark:text-gray-400">
+              <div className="font-normal text-gray-700 dark:text-gray-400">
                 <div dangerouslySetInnerHTML={{ __html: post.SortDescription }}></div>
-              </p>
+              </div>
               <div  className='text-center'>
                 <div>
                 <button className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-2" onClick={() => handleclick(post)}>

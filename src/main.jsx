@@ -23,7 +23,9 @@ import AllBlog from './Pages/AllBlog';
 import FeaturedBlogs from './Pages/FeaturedBlogs';
 import Wishlist from './Pages/Wishlist';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
+import UpdateBlog from './Pages/UpdateBlog';
 import BlogDetails from './Pages/BlogDetails';
+import { serverURL } from './config';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +58,12 @@ const router = createBrowserRouter([
       {
         path: '/post/:id',
         element:<PrivateRoute><BlogDetails></BlogDetails></PrivateRoute>,
+      }
+      ,
+      {
+        path: '/update/:id',
+        element:<PrivateRoute><UpdateBlog></UpdateBlog></PrivateRoute>,
+        loader: ({params}) => fetch(`${serverURL}/post/${params.id}`)
       }
       ,
       {
