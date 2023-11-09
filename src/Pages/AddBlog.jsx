@@ -90,6 +90,8 @@ const AddBlog = () => {
             if (response.status === 200) {
                 toast.success('Blog post added successfully');
                 form.reset(); // Reset the form
+                setLongDescription('');
+                setShortDescription('');
             } else {
                 toast.error('Error adding blog post');
             }

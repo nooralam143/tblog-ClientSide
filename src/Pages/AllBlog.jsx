@@ -18,7 +18,7 @@ const AllBlog = () => {
     queryKey: ['posts'],
     queryFn: fetchData,
     config: {
-      refetchInterval: 5000,
+      refetchInterval: 1000,
       cacheTime: 60000,
     },
   });
@@ -55,7 +55,7 @@ const AllBlog = () => {
       <h1>Posts</h1>
       <ul>
         <div>Total Post: {data.length}</div>
-        <PostCard data={data}></PostCard>
+        <PostCard titleCard="All Post: " data={data}></PostCard>
       </ul>
     </div>
   );

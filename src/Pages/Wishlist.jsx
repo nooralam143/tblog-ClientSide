@@ -12,6 +12,8 @@ const Wishlist = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(AuthContext);
 
+  
+
   useEffect(() => {
     // Make an HTTP request to fetch blog data from the API
     fetch(`${serverURL}/wishlist/user?userEmail=${user.email}`)

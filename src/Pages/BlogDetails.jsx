@@ -40,6 +40,8 @@ const BlogDetails = () => {
 <div className='px-5 py-5'>
 <h2 className="text-lg md:text-xl lg:text-2xl font-semibold mb-2">{blogPost.postTitle}</h2>
         <p className="text-gray-700"><span className="font-bold">Category: </span>{blogPost.postCategory}</p>
+        <p className="text-gray-700"><span className="font-bold">Author: </span>{blogPost.author}</p>
+        <p></p>
        { blogPost.authorEmail == userEmail &&(
     <div>
 <Link to={{
