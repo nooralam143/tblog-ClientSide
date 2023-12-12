@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query'; 
 import Skeleton from 'react-loading-skeleton';
+import SidebarComponent from "./SidebarComponent";
 
 
 const Wishlist = () => {
@@ -83,6 +84,10 @@ const Wishlist = () => {
   }
 
   return (
+    <div className="flex">
+    <div className="hidden md:block lg:block">
+    <SidebarComponent></SidebarComponent>
+    </div>
     <div className="w-full md:w-10/12 lg:w-8/12 xl:w-6/12 mx-auto">
   {isLoading ? (
     <div className="text-center">
@@ -118,7 +123,7 @@ const Wishlist = () => {
             </div>
             <div className="flex flex-col justify-center">
               <div>
-                <Link to={`/post/${post?._id}`}>
+                <Link to={`/post/${post?.postID}`}>
                   <button className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mx-2 mt-2">
                     Details
                   </button>
@@ -138,6 +143,7 @@ const Wishlist = () => {
       ))}
     </div>
   )}
+</div>
 </div>
 
   );

@@ -4,6 +4,7 @@ import PostCard from './PostCard';
 import Skeleton from 'react-loading-skeleton';
 import { Button, Spinner } from 'flowbite-react';
 import { serverURL } from '../config';
+import SidebarComponent from './SidebarComponent';
 
 
 const AllBlog = () => {
@@ -51,12 +52,16 @@ const AllBlog = () => {
   }
 
   return (
-    <div>
-      <h1>Posts</h1>
+    <div className="flex">
+    <div className="hidden md:block lg:block">
+    <SidebarComponent></SidebarComponent>
+    </div>
+    <div className='flex-grow  items-center justify-center'>
       <ul>
         <div>Total Post: {data.length}</div>
         <PostCard titleCard="All Post: " data={data}></PostCard>
       </ul>
+    </div>
     </div>
   );
 };

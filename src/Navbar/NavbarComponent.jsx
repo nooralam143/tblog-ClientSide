@@ -7,7 +7,7 @@ import "../Navbar/Nabar.css"
 const NavbarComponent = () => {
   const { user, logOut } = useContext(AuthContext);
 
-
+console.log(user);
   const handalSignout = () => {
     logOut()
       .then(result => {

@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { serverURL } from '../config';
 import { AuthContext } from '../providers/AuthProvider';
 import CommentComponent from './CommentComponent';
+import SidebarComponent from './SidebarComponent';
 
 
 
@@ -31,6 +32,10 @@ const BlogDetails = () => {
   }, [id]);
 
   return (
+    <div className="flex">
+    <div className="hidden md:block lg:block">
+    <SidebarComponent></SidebarComponent>
+    </div>
     <div className="container mx-auto">
       {isLoading ? (
         <p>Loading...</p>
@@ -78,6 +83,7 @@ const BlogDetails = () => {
       ) : (
         <p>Post not found</p>
       )}
+    </div>
     </div>
   );
 };

@@ -55,9 +55,9 @@ const {data, titleCard} = props;
       return;
     }
     const { email: userEmail } = user;
-    // eslint-disable-next-line react/prop-types, no-undef
-    const { author, authorEmail, postTitle, postImage, SortDescription, LongDescription, postCategory, PostTag, publishDate } = post;
-    const myWishlist = { userEmail, author, authorEmail, postTitle, postImage, SortDescription, LongDescription, postCategory, PostTag, publishDate };
+
+    const { _id:postID, author, authorEmail, postTitle, postImage, SortDescription, LongDescription, postCategory, PostTag, publishDate } = post;
+    const myWishlist = {postID, userEmail, author, authorEmail, postTitle, postImage, SortDescription, LongDescription, postCategory, PostTag, publishDate };
     console.log(myWishlist);
 
     fetch(`${serverURL}/wishlist`, {

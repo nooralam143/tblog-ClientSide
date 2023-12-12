@@ -1,25 +1,28 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { serverURL } from '../config';
 import { Link } from 'react-router-dom';
 
 
-const truncateText = (text, count) => {
-  const words = text.split(' ');
-  if (words.length > count) {
-    return words.slice(0, count).join(' ') + '...';
-  }
-  return text;
-};
 
 const PopularPosts = () => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  const truncateText = (text, count) => {
+    const words = text.split(' ');
+    if (words.length > count) {
+      return words.slice(0, count).join(' ') + '...';
+    }
+    return text;
+  };
+
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(`${serverURL}/post`);
-
         const fetchedPosts = response.data;
 
         // Select three random posts
@@ -32,18 +35,24 @@ const PopularPosts = () => {
         }
 
         setPosts(randomPosts);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching posts:', error);
+        setError('Error fetching posts. Please try again later.');
+        setLoading(false);
       }
     };
 
     fetchPosts();
   }, []);
 
-  const viewPost = (postId) => {
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-    console.log(`View post with ID: ${postId}`);
-  };
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -57,8 +66,10 @@ const PopularPosts = () => {
           <h3 className="text-xl font-bold mb-2">{post.postTitle}</h3>
           <div className="text-gray-700" dangerouslySetInnerHTML={{ __html: truncateText(post.SortDescription, 20) }}></div>
           <div>
-                  <Link to={`/post/${post?._id}`}><button className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-2">View Post</button></Link>
-                </div>
+            <Link to={`/post/${post?._id}`}>
+              <button className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-2">View Post</button>
+            </Link>
+          </div>
         </div>
       ))}
     </div>

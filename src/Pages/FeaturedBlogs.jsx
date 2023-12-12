@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import { serverURL } from '../config';
+import SidebarComponent from './SidebarComponent';
 
 const FeaturedBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -38,14 +39,19 @@ const FeaturedBlogs = () => {
   ];
 
   return (
-    <div>
-      <h1>Featured Blogs</h1>
+    <div className="flex">
+    <div className="hidden md:block lg:block">
+    <SidebarComponent></SidebarComponent>
+    </div>
+    <div className='flex-grow  items-center justify-center'>
+      <h1 className='font-bold'>Featured Blogs</h1>
       <DataTable
         title="Top 10 Posts"
         columns={columns}
         data={blogs}
         pagination // Enable pagination if needed
       />
+    </div>
     </div>
   );
 };

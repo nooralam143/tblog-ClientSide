@@ -7,6 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import { AuthContext } from "../providers/AuthProvider";
 import axios from 'axios';
 import { serverURL } from "../config";
+import SidebarComponent from "./SidebarComponent";
 
 const AddBlog = () => {
     const [longDescription, setLongDescription] = useState('');
@@ -102,7 +103,11 @@ const AddBlog = () => {
     };
 
     return (
-        <Card className="max-w-4xl mx-auto mt-10 mb-10">
+        <div className="flex">
+<div className="hidden md:block lg:block">
+        <SidebarComponent></SidebarComponent>
+        </div>
+        <Card className="w-8/12 mx-auto mt-10 mb-10">
             <form className="flex flex-col gap-4" onSubmit={handalAddBlog}>
                 <div>
                     <div className="mb-2 block">
@@ -180,6 +185,9 @@ const AddBlog = () => {
       />
         </div>
         </Card>
+     
+        </div>
+        
 
     );
 };
